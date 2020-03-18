@@ -234,13 +234,17 @@
         document.getElementById('date').value = (date.getDate()+'').padStart(2, '0') + '/' + ((date.getMonth()+1)+'').padStart(2, '0') + '/' + date.getFullYear();
 
         // Settings fields from url if provided
-        const params = ['name', 'birthday', 'address', 'place'];
+        const params = ['name', 'birthday', 'address', 'reason', 'place'];
         for (let i = 0; i < params.length; i++) {
             const name = params[i];
             const value = getParameterByName(name);
 
             if (value !== null) {
-                document.getElementById(name).value = value;
+                if (name === 'reason') {
+                    document.getElementById('reason_' + value).checked = true;
+                } else {
+                    document.getElementById(name).value = value;
+                }
             }
         }
 
@@ -332,7 +336,20 @@
 
             for (let i = 0; i < params.length; i++) {
                 const name = params[i];
-                const value = document.getElementById(name).value;
+                let value = null;
+
+                if (name === 'reason') {
+                    const reasons = ['a', 'b', 'c', 'd', 'e'];
+                    for (let j = 0; j < reasons.length; j++) {
+                        const reason = reasons[j];
+
+                        if (document.getElementById('reason_' + reason).checked) {
+                            value = reason;
+                        }
+                    }
+                } else {
+                    value = document.getElementById(name).value;
+                }
 
                 if (value !== null) {
                     if (url.length === 0) {
