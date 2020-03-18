@@ -117,7 +117,8 @@
         }
         body.render .actions #clear,
         body.render .actions #render,
-        body.render .actions #print {
+        body.render .actions #print,
+        body.render .actions #save {
             display: none;
         }
         body.render .actions #edit {
@@ -207,9 +208,10 @@
     </form>
 
     <div class="actions">
-        <button onclick="clearCanvas();" id="clear">Refaire la signature</button><br><br>
-        <button onclick="render();" id="render">Afficher</button> <button onclick="print_();" id="print">Imprimer</button><br>
-        <button onclick="edit();" id="edit">Modifier</button>
+        <button id="clear">Refaire la signature</button><br><br>
+        <button id="render">Afficher</button> <button id="print">Imprimer</button><br>
+        <button id="save">Sauvegarder la saisie</button><br>
+        <button id="edit">Modifier</button>
     </div>
 
     <footer>
@@ -218,17 +220,33 @@
     </footer>
 
     <script type="text/javascript">
-        function $(id) { return document.getElementById(id); }
         const touch = 'ontouchstart' in window && (navigator.maxTouchPoints || navigator.msMaxTouchPoints);
+
+        document.getElementById('clear').addEventListener('click', clearCanvas);
+        document.getElementById('render').addEventListener('click', render);
+        document.getElementById('print').addEventListener('click', print_);
+        document.getElementById('save').addEventListener('click', save);
+        document.getElementById('edit').addEventListener('click', edit);
 
         // Setting current date
 
         const date = new Date();
-        $('date').value = (date.getDate()+'').padStart(2, '0') + '/' + ((date.getMonth()+1)+'').padStart(2, '0') + '/' + date.getFullYear();
+        document.getElementById('date').value = (date.getDate()+'').padStart(2, '0') + '/' + ((date.getMonth()+1)+'').padStart(2, '0') + '/' + date.getFullYear();
+
+        // Settings fields from url if provided
+        const params = ['name', 'birthday', 'address', 'place'];
+        for (let i = 0; i < params.length; i++) {
+            const name = params[i];
+            const value = getParameterByName(name);
+
+            if (value !== null) {
+                document.getElementById(name).value = value;
+            }
+        }
 
         // Signature drawing
 
-        const canvas = $('signature');
+        const canvas = document.getElementById('signature');
         const ctx = canvas.getContext('2d');
 
         canvas.addEventListener('mousedown', drawingStart, false);
@@ -270,6 +288,8 @@
         }
 
         function drawingEnd(e) {
+            e.preventDefault();
+
             drawing = false;
 
             canvas.removeEventListener('mousemove', drawingMove);
@@ -277,24 +297,66 @@
             window.removeEventListener('touchend', drawingEnd);
         }
 
-        function clearCanvas() {
+        function clearCanvas(e) {
+            e.preventDefault();
+
             ctx.clearRect(0, 0, canvas.width, canvas.height);
         }
 
         // Rendering
 
-        function render() {
+        function render(e) {
+            e.preventDefault();
+
             document.body.classList.add('render');
         }
 
-        function edit() {
+        function edit(e) {
+            e.preventDefault();
+
             document.body.classList.remove('render');
         }
 
-        function print_() {
+        function print_(e) {
+            e.preventDefault();
+
             document.body.classList.add('render');
             window.print();
             document.body.classList.remove('render');
+        }
+
+        function save(e) {
+            e.preventDefault();
+
+            let url = '';
+
+            for (let i = 0; i < params.length; i++) {
+                const name = params[i];
+                const value = document.getElementById(name).value;
+
+                if (value !== null) {
+                    if (url.length === 0) {
+                        url += '?';
+                    } else {
+                        url += '&';
+                    }
+                    url += name + '=' + value;
+                }
+            }
+
+            window.location.href = url;
+        }
+
+        // Inspired by: https://stackoverflow.com/a/901144/1940799
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                    results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
         }
 
     </script>
