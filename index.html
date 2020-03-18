@@ -1,183 +1,307 @@
 <!DOCTYPE html>
-<html>
 <head>
-    <title>Attestation de déplacement</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+
+    <title>Attestation de déplacement dérogatoire - COVID-19 - France</title>
+
+    <style type="text/css">
+        body {
+            color: #000;
+            background-color: #fff;
+            font-size: 15px;
+            font-family: Arial, sans-serif;
+            font-weight: normal;
+            text-align: justify;
+
+            padding-left: 32px;
+            padding-right: 32px;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-top: 60px;
+            margin-bottom: 30px;
+        }
+        .form-header h1 {
+            font-size: 1.3em;
+        }
+        .form-header p {
+            font-size: 1em;
+        }
+        h2 {
+            font-size: 1.1em;
+            font-weight: normal;
+        }
+        p {
+            font-size: 1.1em;
+        }
+        label {
+            font-size: 1.1em;
+        }
+        input, textarea {
+            font-size: 1.1em;
+            border: none;
+            border-bottom: 1px dotted #888;
+            -webkit-appearance: none; /* Chrome, Safari, Opera */
+            border-radius: 0;
+        }
+        .form-row label {
+            display: inline-block;
+            width: 120px;
+        }
+        .form-row label.textarea {
+            vertical-align: top;
+            padding-top: 4px;
+        }
+        .form-row input {
+            width: calc(100% - 150px);
+        }
+        .form-row textarea {
+            height: 3.6em;
+            width: calc(100% - 150px);
+        }
+        .form-boxes {
+            margin-bottom: 1.1em;
+        }
+        .form-boxes::after {
+            clear: both;
+            content: "";
+            display: table;
+        }
+        .form-boxes input {
+            margin-left: 10px;
+            margin-right: 20px;
+            float: left;
+            -webkit-appearance: none; /* Chrome, Safari, Opera */
+            border: 1px solid #000;
+            width: 16px;
+            height: 16px;
+            position: relative;
+            outline: none;
+        }
+        .form-boxes input:checked::after {
+            content: "\2713";
+            font-size: 26px;
+            position: absolute;
+            top: -11px;
+            left: 0;
+        }
+        .form-boxes label {
+            float: left;
+            width: calc(100% - 50px);
+        }
+        .form-signature {
+            text-align: right;
+        }
+        .form-signature canvas {
+            display: block;
+            width: 400px;
+            height: 200px;
+            margin-left: calc(100% - 400px);
+            border: 1px solid #000;
+        }
+        .actions {
+            text-align: center;
+            margin-top: 80px;
+        }
+        .actions button {
+            font-size: 1em;
+        }
+        .actions #edit {
+            display: none;
+        }
+
+        body.render .form-signature canvas {
+            border: none;
+        }
+        body.render .actions #clear,
+        body.render .actions #render,
+        body.render .actions #print {
+            display: none;
+        }
+        body.render .actions #edit {
+            display: inline;
+        }
+        body.render footer {
+            display: none;
+        }
+        @media print {
+            .form-signature canvas {
+                border: none;
+            }
+            body.render .actions #clear,
+            body.render .actions #render,
+            body.render .actions #print {
+                display: none;
+            }
+            body.render .actions #edit {
+                display: block;
+            }
+            footer {
+                display: none;
+            }
+
+            .form-signature canvas {
+                width: 300px;
+                height: 150px;
+                margin-left: calc(100% - 300px);
+            }
+        }
+    </style>
 </head>
 <body>
 
-<style type="text/css">
-    body {margin: 4em;}
-    button {font-size: 20px;}
-    footer {font-size: 14px; margin-top: 50px;}
+    <form id="form">
+        <div class="form-header">
+            <h1>ATTESTATION DE DÉPLACEMENT DÉROGATOIRE</h1>
 
-    @media print {
-        #reset_btn {display: none;}
-        footer {display: none;}
-    }
+            <p>En application de l'article 1er du décret du 16 mars 2020 portant réglementation des déplacements dans le cadre de la lutte contre la propagation du virus Covid-19 :</p>
+        </div>
 
-</style>
+        <h2>Je soussigné(e)</h2>
 
-<h1>ATTESTATION DE DÉPLACEMENT DÉROGATOIRE</h1>
+        <div class="form-row">
+            <label for="name">Mme / M.</label>
+            <input id="name" type="text"><br>
+        </div>
 
-<p>En application de l'article 1er du décret du 16 mars 2020 portant réglementation des déplacements dans le cadre de la lutte contre la propagation du virus Covid-19 :</p>
+        <div class="form-row">
+            <label for="birthday">Né(e) le :</label>
+            <input id="birthday" type="text">
+        </div>
 
+        <div class="form-row">
+            <label for="address" class="textarea">Demeurant :</label>
+            <textarea id="address"></textarea>
+        </div>
 
-<form>
-    <h4><b>Je soussigné(e)</b></h4>
-    <label for="name"><b>Mme / M.</b></label>
-    <input id="name" type="text"><br/>
+        <p>certifie que mon déplacement est lié au motif suivant (cocher la case) autorisé par l'article 1er du décret du 16 mars 2020 portant réglementation des déplacements dans le cadre de la lutte contre la propagation du virus Covid-19 :</p>
 
-    <label for="born"><b>Né(e) le :</b></label>
-    <input id="born" type="date"><br/>
+        <div class="form-boxes">
+            <input id="reason_a" type="radio" name="reason">
+            <label for="reason_a">déplacements entre le domicile et le lieu d'exercice de l'activité professionnelle, lorsqu'ils sont indispensables à l'exercice d'activités ne pouvant être organisées sous forme de télétravail (sur justificatif permanent) ou déplacements professionnels ne pouvant être différés;</label>
+        </div>
 
-    <label for="address"><b>Demeurant :</b></label>
-    <input id="address" type="text"><br/>
+        <div class="form-boxes">
+            <input id="reason_b" type="radio" name="reason">
+            <label for="reason_b">déplacements pour effectuer des achats de première nécessité dans des établissements autorisés (liste sur gouvernement.fr);</label>
+        </div>
 
+        <div class="form-boxes">
+            <input id="reason_c" type="radio" name="reason">
+            <label for="reason_c">déplacements pour motif de santé;</label>
+        </div>
 
-    <h4>certifie que mon déplacement est lié au motif suivant (cocher la case) autorisé par l'article 1er du décret du 16 mars 2020 portant réglementation des déplacements dans le cadre de la lutte contre la propagation du virus Covid-19:</h4>
+        <div class="form-boxes">
+            <input id="reason_d" type="radio" name="reason">
+            <label for="reason_d">déplacements pour motif familial impérieux, pour l'assistance aux personnes vulnérables ou la garde d'enfants;</label>
+        </div>
 
-    <p>
-        <input id="choix_a" type="radio" name="choix">
-        <label for="choix_a" id="label_choix_a"><b>déplacements entre le domicile et le lieu d'exercice de l'activité professionnelle, lorsqu'ils sont indispensables à l'exercice d'activités ne pouvant être organisées sous forme de télétravail (sur justificatif permanent) ou déplacements professionnels ne pouvant être différés;</b></label>
-    </p>
+        <div class="form-boxes">
+            <input id="reason_e" type="radio" name="reason">
+            <label for="reason_e">déplacements brefs, à proximité du domicile, liés à l'activité physique individuelle des personnes, à l'exclusion de toute pratique sportive collective, et aux besoins des animaux de compagnie.</label>
+        </div>
 
-    <p>
-        <input id="choix_b" type="radio" name="choix">
-        <label for="choix_b" id="label_choix_b"><b>déplacements pour effectuer des achats de première nécessité dans des établissements autorisés (liste sur gouvernement.fr);</b></label>
-    </p>
+        <div class="form-signature">
+            <label for="place">Fait à </label><input type="text" id="place">,
+            <label for="date">le </label><input type="text" id="date"><br>
+            (signature)
+            <canvas id="signature" width="400" height="200"></canvas>
+        </div>
+    </form>
 
-    <p>
-        <input id="choix_c" type="radio" name="choix">
-        <label for="choix_c" id="label_choix_c"><b>déplacements pour motif de santé;</b></label>
-    </p>
+    <div class="actions">
+        <button onclick="clearCanvas();" id="clear">Refaire la signature</button><br><br>
+        <button onclick="render();" id="render">Afficher</button> <button onclick="print_();" id="print">Imprimer</button><br>
+        <button onclick="edit();" id="edit">Modifier</button>
+    </div>
 
-    <p>
-        <input id="choix_d" type="radio" name="choix">
-        <label for="choix_d" id="label_choix_d"><b>déplacements pour motif familial impérieux, pour l'assistance aux personnes vulnérables ou la garde d'enfants;</b></label>
-    </p>
+    <footer>
+        Conforme RGPD, certifié sans stockage et sans cookies.<br>
+        Code source disponible sur <a href="https://github.com/vikbez/covid-sortie">https://github.com/vikbez/covid-sortie</a>
+    </footer>
 
-    <p>
-        <input id="choix_e" type="radio" name="choix">
-        <label for="choix_e" id="label_choix_e"><b>déplacements brefs, à proximité du domicile, liés à l'activité physique individuelle des personnes, à l'exclusion de toute pratique sportive collective, et aux besoins des animaux de compagnie.</b></label>
-    </p>
+    <script type="text/javascript">
+        function $(id) { return document.getElementById(id); }
+        const touch = 'ontouchstart' in window && (navigator.maxTouchPoints || navigator.msMaxTouchPoints);
 
-    <p align="right">
-        <label for="place">Fait à </label><input type="text" id="place">
-        <label for="date">le </label><input type="date" id="date"><br>
-        (signature)<br/>
-        <canvas style="border: 1px solid black" id="signature" width="400" height="300"></canvas><br/>
-        <a href="#" onclick="can_clear();" id="clear_btn">Effacer</a>
+        // Setting current date
 
-    </p>
+        const date = new Date();
+        $('date').value = (date.getDate()+'').padStart(2, '0') + '/' + ((date.getMonth()+1)+'').padStart(2, '0') + '/' + date.getFullYear();
 
-</form>
+        // Signature drawing
 
-<center><button onclick="render();" id="render_btn">Génerer</button></center><br/>
-<center><button onclick="window.location.reload();" id="reset_btn">Remise à zéro</button></center>
+        const canvas = $('signature');
+        const ctx = canvas.getContext('2d');
 
-<center><footer>Conforme RGPD, certifié sans stockage et sans cookies. code dispo sur <a href="https://github.com/vikbez/covid-sortie">https://github.com/vikbez/covid-sortie</a></footer></center>
+        canvas.addEventListener('mousedown', drawingStart, false);
+        canvas.addEventListener('touchstart', drawingStart, false);
 
-<script type="text/javascript">
+        let drawing = false;
 
-    function $(id) { return document.getElementById(id); }
-    var is_safari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        function drawingStart(e) {
+            e.preventDefault();
 
-    if (is_safari) {
-        $('date').value = new Date().toLocaleDateString();
-    } else {
-        $('date').valueAsDate = new Date();
-    }
-
-    // CANVAS HANDLING
-
-    var canvas = $('signature');
-    canvas.addEventListener('mousedown', ev_mousedown, false);
-    canvas.addEventListener('mousemove', ev_mousemove, false);
-    window.addEventListener('mouseup', ev_mouseup, false);
-
-    canvas.addEventListener('touchstart', ev_touchstart, false);
-    canvas.addEventListener('touchmove', ev_touchmove, false);
-    window.addEventListener('touchend', ev_mouseup, false);
-
-    ctx = canvas.getContext('2d');
-
-    var started = false;
-
-    function ev_mouseup(ev) {
-        started = false;
-    }
-
-    function ev_touchstart(ev) {
-        ev.preventDefault();
-        started = true;
-        var x = ev.touches[0].clientX;
-        var y = ev.touches[0].clientY;
-        x = x - canvas.offsetLeft;
-        y = y - canvas.offsetTop;
-
-        ctx.beginPath();
-        ctx.moveTo(x, y);
-    }
-
-    function ev_touchmove(ev) {
-        ev.preventDefault();
-
-        var x = ev.touches[0].clientX;
-        var y = ev.touches[0].clientY;
-        x = x - canvas.offsetLeft;
-        y = y - canvas.offsetTop;
-
-        if (started) {
-            ctx.lineTo(x, y);
-            ctx.stroke();
-        }
-    }
-
-    function ev_mousedown(ev) {
-        started = true;
-        ctx.beginPath();
-        ctx.moveTo(ev.offsetX, ev.offsetY);
-    }
-
-    function ev_mousemove(ev) {
-        if (started) {
-            ctx.lineTo(ev.offsetX, ev.offsetY);
-            ctx.stroke();
-        }
-    }
-
-    function can_clear() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }
-
-    // RENDERING
-
-    function render() {
-        canvas.removeEventListener('mousedown', ev_mousedown);
-        canvas.style.cssText = "border: none;";
-
-        $("clear_btn").remove();
-        $("render_btn").remove();
-
-        to_render = ['name', 'born', 'address', 'place', 'date'];
-        to_render.forEach(function(el) {
-            $(el).insertAdjacentHTML('afterend', $(el).value);
-            $(el).remove();
-        });
-
-        to_disable = ['choix_a', 'choix_b', 'choix_c', 'choix_d', 'choix_e'];
-        to_disable.forEach(function(el) {
-            if (!$(el).checked) {
-                $(el).remove();
-                $('label_' + el).remove();
+            if (document.body.classList.contains('render')) {
+                return;
             }
-        });
 
-        window.print();
+            canvas.addEventListener('mousemove', drawingMove, false);
+            canvas.addEventListener('touchmove', drawingMove, false);
+            window.addEventListener('mouseup', drawingEnd, false);
+            window.addEventListener('touchend', drawingEnd, false);
 
-    }
+            drawing = true;
 
-</script>
+            const x = (e.clientX || e.pageX || e.originalEvent.touches[0].clientX) + (touch ? 0 : window.scrollX) - canvas.offsetLeft;
+            const y = (e.clientY || e.pageY || e.originalEvent.touches[0].clientY) + (touch ? 0 : window.scrollY) - canvas.offsetTop;
 
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        }
+
+        function drawingMove(e) {
+            e.preventDefault();
+
+            const x = (e.clientX || e.pageX || e.originalEvent.touches[0].clientX) + (touch ? 0 : window.scrollX) - canvas.offsetLeft;
+            const y = (e.clientY || e.pageY || e.originalEvent.touches[0].clientY) + (touch ? 0 : window.scrollY) - canvas.offsetTop;
+
+            if (drawing) {
+                ctx.lineTo(x, y);
+                ctx.stroke();
+            }
+        }
+
+        function drawingEnd(e) {
+            drawing = false;
+
+            canvas.removeEventListener('mousemove', drawingMove);
+            canvas.removeEventListener('touchmove', drawingMove);
+            window.removeEventListener('touchend', drawingEnd);
+        }
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // Rendering
+
+        function render() {
+            document.body.classList.add('render');
+        }
+
+        function edit() {
+            document.body.classList.remove('render');
+        }
+
+        function print_() {
+            document.body.classList.add('render');
+            window.print();
+            document.body.classList.remove('render');
+        }
+
+    </script>
 </body>
 </html>
